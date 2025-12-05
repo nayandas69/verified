@@ -6,9 +6,11 @@
  */
 
 import fs from "fs/promises"
+import path from "path"
 import { log } from "./logger.js"
 
-const VERIFICATION_FILE = "./data/verified.json"
+const DATA_DIR = path.resolve(process.cwd(), "data")
+const VERIFICATION_FILE = path.join(DATA_DIR, "verified.json")
 
 /**
  * In-memory verification store
@@ -30,8 +32,7 @@ class VerificationStore {
     }
 
     try {
-      // Ensure data directory exists
-      await fs.mkdir("./data", { recursive: true })
+      await fs.mkdir(DATA_DIR, { recursive: true, mode: 0o755 })
 
       // Try to load existing data
       try {

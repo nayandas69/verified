@@ -13,10 +13,9 @@ RUN npm install --production --no-package-lock
 # Copy application source code
 COPY . .
 
-RUN mkdir -p /app/data && chown -R node:node /app/data
+# This ensures proper permissions when volume is mounted
 
-# Switch to non-root user for security
-USER node
+# Run as root to ensure data directory write permissions work with mounted volumes
 
 # Expose web server port
 EXPOSE 3000

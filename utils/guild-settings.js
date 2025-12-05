@@ -6,9 +6,11 @@
  */
 
 import fs from "fs/promises"
+import path from "path"
 import { log } from "./logger.js"
 
-const SETTINGS_FILE = "./data/guild-settings.json"
+const DATA_DIR = path.resolve(process.cwd(), "data")
+const SETTINGS_FILE = path.join(DATA_DIR, "guild-settings.json")
 
 /**
  * Default messages for new guilds
@@ -45,7 +47,7 @@ class GuildSettings {
         }
 
         try {
-            await fs.mkdir("./data", { recursive: true })
+            await fs.mkdir(DATA_DIR, { recursive: true, mode: 0o755 })
 
             try {
                 const data = await fs.readFile(SETTINGS_FILE, "utf-8")
