@@ -13,10 +13,10 @@ RUN npm ci --only=production
 # Copy application source code
 COPY . .
 
-# Create directory for persistent data
-RUN mkdir -p /app/data
+RUN mkdir -p /app/data && chown -R node:node /app/data
 
-VOLUME ["/app/data"]
+# Switch to non-root user for security
+USER node
 
 # Expose web server port
 EXPOSE 3000
